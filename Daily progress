@@ -1,0 +1,21 @@
+Day 0:
+- Application to competition
+
+Day 1:
+- Find IoT components needed for the project in my home
+- Create a "Hello world" readme in the repository
+
+Day 2:
+- Install Arduino IDE
+- Configure Arduino IDE to work with WeMos D1 R2 board
+- Create an initial project in Arduino IDE
+- Install git
+
+Day 3:
+- Set git repo
+- Add initial WeMos D1 R2 Board project
+
+Day 4:
+- Connect DHT11 sensor to WeMos D1 R2 Board
+- Add DHT sensor library and dependency library by Adafruit
+- Add DHT11 sensor code
