@@ -19,7 +19,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  delay(60000); // Wait 60 seconds between measurements.
+  delay(59970); // Wait 60 seconds between measurements - experimental sensor reading time
   
   Serial.print("DHT11: ");
 
