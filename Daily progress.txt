@@ -19,3 +19,20 @@ Day 4:
 - Connect DHT11 sensor to WeMos D1 R2 Board
 - Add DHT sensor library and dependency library by Adafruit
 - Add DHT11 sensor code
+
+Day 5:
+- Connect DHT22 sensor to WeMos D1 R2 Board
+- Add DHT22 sensor code
+- Monitor sensor readings during the night - failure because of a Windows update and a laptop restart
+- Monitor sensor readings during the day - change delay setting
+
+Day 6:
+- Change delay setting
+
+Day 7:
+- Instal library to use new sensor
+- Connect DFRobot Gravity - BMP280 pressure and altitude sensor
+- Add DFRobot Gravity - BMP280 sensor code
+
+Day 8:
+- Update daily progress file

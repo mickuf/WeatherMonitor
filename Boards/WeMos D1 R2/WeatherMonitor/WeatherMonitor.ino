@@ -9,26 +9,10 @@
 #define DHT22PIN D5             // digital pin for DHT22
 #define DHT22TYPE DHT22         // DHT 22  (AM2302), AM2321
 
-#define SEA_LEVEL_PRESSURE    1015.0f   // sea level pressure
-
-DHT dht11(DHT11PIN, DHT11TYPE);
 DHT dht22(DHT22PIN, DHT22TYPE);
+DHT dht11(DHT11PIN, DHT11TYPE);
 
-typedef DFRobot_BMP280_IIC    BMP;    // ******** use abbreviations instead of full names ********
-
-BMP   bmp(&Wire, BMP::eSdoLow);
-
-// show last sensor operate status
-void printLastOperateStatus(BMP::eStatus_t eStatus)
-{
-  switch(eStatus) {
-  case BMP::eStatusOK:    Serial.println("everything ok"); break;
-  case BMP::eStatusErr:   Serial.println("unknow error"); break;
-  case BMP::eStatusErrDeviceNotDetected:    Serial.println("device not detected"); break;
-  case BMP::eStatusErrParameter:    Serial.println("parameter error"); break;
-  default: Serial.println("unknow status"); break;
-  }
-}
+DFRobot_BMP280 bmp280; 
 
 void setup() {
   // put your setup code here, to run once:
@@ -37,27 +21,16 @@ void setup() {
   dht11.begin();
   dht22.begin();
 
-  bmp.reset();
-  Serial.println("bmp read data test");
-  while(bmp.begin() != BMP::eStatusOK) {
-    Serial.println("bmp begin faild");
-    printLastOperateStatus(bmp.lastOperateStatus);
-    delay(2000);
+  if (!bmp280.begin()) {  
+    Serial.println("Could not find a valid BMP280 sensor!");
+    while (1);
   }
-  Serial.println("bmp begin success");
-
-  bmp.setConfigFilter(BMP::eConfigFilter_off);        // set config filter
-  bmp.setConfigTStandby(BMP::eConfigTStandby_125);    // set standby time
-  bmp.setCtrlMeasSamplingTemp(BMP::eSampling_X8);     // set temperature over sampling
-  bmp.setCtrlMeasSamplingPress(BMP::eSampling_X8);    // set pressure over sampling
-  bmp.setCtrlMeasMode(BMP::eCtrlMeasModeNormal);     // set control measurement mode to make these settings effective
-
-  delay(100);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  delay(59970); // Wait 60 seconds between measurements - experimental sensor reading time
+  //delay(59970); // Wait 60 seconds between measurements - experimental sensor reading time
+  delay(1000);
   
   Serial.print("DHT11: ");
 
@@ -90,16 +63,16 @@ void loop() {
   Serial.println("--- BMP280 ---");
 
   Serial.print("Temperature: ");
-  Serial.print(bmp.getTemperature());
-  Serial.print(" *C");
+  Serial.print(bmp280.readTemperatureValue());
+  Serial.println(" *C");
 
-  uint32_t pressure = bmp.getPressure();
+  int pressure = bmp280.readPressureValue()/100;
     
   Serial.print("Pressure: ");
-  Serial.print(pressure/100);
-  Serial.print(" hPa");
+  Serial.print(bmp280.readPressureValue()/100);
+  Serial.println(" hPa");
 
   Serial.print("Altitude: ");
-  Serial.print(bmp.calAltitude(SEA_LEVEL_PRESSURE, pressure)); // this should be adjusted to your local forecast??
+  Serial.print(bmp280.readAltitudeValue(1013.25)); // this should be adjusted to your local forecast?
   Serial.println(" m");
 }
