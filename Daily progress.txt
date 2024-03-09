@@ -36,3 +36,7 @@ Day 7:
 
 Day 8:
 - Update daily progress file
+
+Day 9:
+- Connect Photoresistor
+- Add Photoresistor code
