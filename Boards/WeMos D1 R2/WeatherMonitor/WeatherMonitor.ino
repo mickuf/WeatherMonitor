@@ -78,6 +78,14 @@ void loop() {
   Serial.print(bmp280.readAltitudeValue(1013.25)); // 1013.25 this should be adjusted to your local forecast?
   Serial.print("m ");
 
-  Serial.print("Lumosity: ");
-  Serial.println(analogRead(PHOTORESISTOR_PIN)); // 0 .. 1023 --> 0V .. 5V
+  int rawLumosity = analogRead(PHOTORESISTOR_PIN);
+  float lumosityPercentage = map (rawLumosity, 30, 1024, 0, 100); // analog reading, reading minimum value, reading max value, minimum transformed value, maximum transformed value
+
+  Serial.print("|RL: "); // Raw Lumosity: 
+  Serial.print(rawLumosity); // 0V .. 5V --> 0 .. 1023
+
+  Serial.print(" L: "); // Lumosity %
+  Serial.print(lumosityPercentage); // 0 .. 1023 --> 0 .. 100 | 10k ohm: ~91 - 1024 - but starging value in not so sunny room was 1024 | 1k ohm: starting value ~650, min value ~30, max value 1024 using flashlight 
+  Serial.println("% ");
+  
 }

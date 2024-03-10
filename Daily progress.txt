@@ -40,3 +40,8 @@ Day 8:
 Day 9:
 - Connect Photoresistor
 - Add Photoresistor code
+
+Day 10:
+- Add change photoresistor analog input to percentage value
+- Change resistor to 1k ohm for better readings (instead of 10k ohm)
+- Test readings from photoresistor with 1k ohm and 10k ohm resistors
