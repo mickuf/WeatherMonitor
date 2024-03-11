@@ -45,3 +45,6 @@ Day 10:
 - Add change photoresistor analog input to percentage value
 - Change resistor to 1k ohm for better readings (instead of 10k ohm)
 - Test readings from photoresistor with 1k ohm and 10k ohm resistors
+
+Day 11:
+- Add connect WeMos D1 R2 using ESP8266 with WiFi network

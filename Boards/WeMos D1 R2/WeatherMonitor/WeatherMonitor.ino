@@ -3,6 +3,8 @@
 #include <Wire.h>               // DFRobot_BMP280 sensor
 #include "DFRobot_BMP280.h"     // DFRobot_BMP280 sensor
 
+#include <ESP8266WiFi.h>        // WiFi
+
 #define DHT11PIN D4             // digital pin for DHT11
 #define DHT11TYPE DHT11         // DHT 11
 
@@ -14,11 +16,27 @@
 DHT dht22(DHT22PIN, DHT22TYPE);
 DHT dht11(DHT11PIN, DHT11TYPE);
 
-DFRobot_BMP280 bmp280;  
+DFRobot_BMP280 bmp280;
+
+const char* ssid = "ESP8266";             // TODO MOVE TO NEW FILE WITH gitingore!
+const char* password = "ESP8266Test";     // TODO MOVE TO NEW FILE WITH gitingore!
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
+
+  WiFi.begin(ssid, password);
+  Serial.println();
+  Serial.print("Connecting");
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println("success!");
+  Serial.print("IP Address is: ");
+  Serial.println(WiFi.localIP());
 
   dht11.begin();
   dht22.begin();
