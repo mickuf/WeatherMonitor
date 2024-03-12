@@ -48,3 +48,6 @@ Day 10:
 
 Day 11:
 - Add connect WeMos D1 R2 using ESP8266 with WiFi network
+
+Day 12:
+- Add initial Http Server code

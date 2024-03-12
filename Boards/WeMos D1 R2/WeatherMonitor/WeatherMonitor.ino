@@ -4,6 +4,9 @@
 #include "DFRobot_BMP280.h"     // DFRobot_BMP280 sensor
 
 #include <ESP8266WiFi.h>        // WiFi
+#include <WiFiClient.h>
+#include <ESP8266mDNS.h>
+#include <ESP8266WebServer.h> 
 
 #define DHT11PIN D4             // digital pin for DHT11
 #define DHT11TYPE DHT11         // DHT 11
@@ -20,6 +23,11 @@ DFRobot_BMP280 bmp280;
 
 const char* ssid = "ESP8266";             // TODO MOVE TO NEW FILE WITH gitingore!
 const char* password = "ESP8266Test";     // TODO MOVE TO NEW FILE WITH gitingore!
+
+ESP8266WebServer server(80);    // Create a webserver object that listens for HTTP request on port 80
+
+void handleRoot();              // function prototypes for HTTP handlers
+void handleNotFound();
 
 void setup() {
   // put your setup code here, to run once:
@@ -38,6 +46,18 @@ void setup() {
   Serial.print("IP Address is: ");
   Serial.println(WiFi.localIP());
 
+  if (MDNS.begin("esp8266")) {              // Start the mDNS responder for esp8266.local
+    Serial.println("mDNS responder started");
+  } else {
+    Serial.println("Error setting up MDNS responder!");
+  }
+
+  server.on("/", handleRoot);               // Call the 'handleRoot' function when a client requests URI "/"
+  server.onNotFound(handleNotFound);        // When a client requests an unknown URI (i.e. something other than "/"), call function "handleNotFound"
+
+  server.begin();                           // Actually start the server
+  Serial.println("HTTP server started");
+
   dht11.begin();
   dht22.begin();
 
@@ -45,12 +65,24 @@ void setup() {
     Serial.println("Could not find a valid BMP280 sensor!");
     while (1);
   }
+  
+}
+
+void handleRoot() {
+  server.send(200, "text/plain", "Hello world!");   // Send HTTP status 200 (Ok) and send some text to the browser/client
+}
+
+void handleNotFound(){
+  server.send(404, "text/plain", "404: Not found"); // Send HTTP status 404 (Not Found) when there's no handler for the URI in the request
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   //delay(59970); // Wait 60 seconds between measurements - experimental sensor reading time (for DHT 11 and 22 sensors)
-  delay(1000);
+  
+  server.handleClient();                    // Listen for HTTP requests from clients
+  
+  delay(1000); //???
   
   Serial.print("DHT11|");
 
