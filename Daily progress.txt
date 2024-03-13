@@ -51,3 +51,6 @@ Day 11:
 
 Day 12:
 - Add initial Http Server code
+
+Day 13:
+- No update today
