@@ -57,3 +57,6 @@ Day 13:
 
 Day 14:
 - No update today
+
+Day 15:
+- Transferring the wiring to a smaller target breadboard
