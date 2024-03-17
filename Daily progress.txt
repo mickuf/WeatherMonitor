@@ -63,3 +63,6 @@ Day 15:
 
 Day 16:
 - Research sending post request from arduino
+
+Day 17:
+- Test sending requests from arduino
