@@ -66,3 +66,6 @@ Day 16:
 
 Day 17:
 - Test sending requests from arduino
+
+Day 18:
+- No update today
