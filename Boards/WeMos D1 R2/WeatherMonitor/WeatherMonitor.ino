@@ -23,7 +23,7 @@ DHT dht11(DHT11PIN, DHT11TYPE);
 DFRobot_BMP280 bmp280;
 
 const char* ssid = "ESP8266";  // "ESP8266";             // TODO MOVE TO NEW FILE WITH gitingore!  
-const char* password = "ESP8266";  // "ESP8266";    // TODO MOVE TO NEW FILE WITH gitingore!
+const char* password = "ESP8266";   // "ESP8266";    // TODO MOVE TO NEW FILE WITH gitingore!
 const char* serverName = "http://192.168.1.36:5102/test";//"http://192.168.1.106:1880/update-sensor";
 
 //ESP8266WebServer server(80);    // Create a webserver object that listens for HTTP request on port 80
@@ -91,23 +91,17 @@ void loop() {
       // Your Domain name with URL path or IP address with path
       http.begin(client, serverName);
       
-      // If you need Node-RED/server authentication, insert user and password below
       //http.setAuthorization("REPLACE_WITH_SERVER_USERNAME", "REPLACE_WITH_SERVER_PASSWORD");
-      
-      // Specify content-type header
       //http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-      // Data to send with HTTP POST
-      //String httpRequestData = "api_key=tPmAT5Ab3j7F9&sensor=BME280&value1=24.25&value2=49.54&value3=1005.14";           
-      // Send HTTP POST request
-      int httpResponseCode = http.GET(); //http.POST(httpRequestData);
+      //String httpRequestData = "api_key=tPmAT5Ab3j7F9&sensor=BME280&value1=24.25&value2=49.54&value3=1005.14";  
+               
+      //int httpResponseCode = http.GET(); //http.POST(httpRequestData);
       
-      // If you need an HTTP request with a content type: application/json, use the following:
       //http.addHeader("Content-Type", "application/json");
       //int httpResponseCode = http.POST("{\"api_key\":\"tPmAT5Ab3j7F9\",\"sensor\":\"BME280\",\"value1\":\"24.25\",\"value2\":\"49.54\",\"value3\":\"1005.14\"}");
 
-      // If you need an HTTP request with a content type: text/plain
-      //http.addHeader("Content-Type", "text/plain");
-      //int httpResponseCode = http.POST("Hello, World!");
+      http.addHeader("Content-Type", "text/plain");
+      int httpResponseCode = http.POST("Hello, World!");
      
       Serial.print("HTTP Response code: ");
       Serial.println(httpResponseCode);

@@ -72,3 +72,6 @@ Day 18:
 
 Day 19:
 - Test sending GET request from arduino to temp API
+
+Day 20:
+- Test sending POST request from arduino to temp API
