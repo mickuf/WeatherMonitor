@@ -22,9 +22,9 @@ DHT dht11(DHT11PIN, DHT11TYPE);
 
 DFRobot_BMP280 bmp280;
 
-const char* ssid = "ESP8266";  // "ESP8266";             // TODO MOVE TO NEW FILE WITH gitingore!  
+const char* ssid = "ESP8266";    // "ESP8266";             // TODO MOVE TO NEW FILE WITH gitingore!  
 const char* password = "ESP8266";   // "ESP8266";    // TODO MOVE TO NEW FILE WITH gitingore!
-const char* serverName = "http://192.168.1.36:5102/test";//"http://192.168.1.106:1880/update-sensor";
+const char* serverName = "http://192.168.1.36:5102/test1";//"http://192.168.1.106:1880/update-sensor";
 
 //ESP8266WebServer server(80);    // Create a webserver object that listens for HTTP request on port 80
 
@@ -100,8 +100,23 @@ void loop() {
       //http.addHeader("Content-Type", "application/json");
       //int httpResponseCode = http.POST("{\"api_key\":\"tPmAT5Ab3j7F9\",\"sensor\":\"BME280\",\"value1\":\"24.25\",\"value2\":\"49.54\",\"value3\":\"1005.14\"}");
 
-      http.addHeader("Content-Type", "text/plain");
-      int httpResponseCode = http.POST("Hello, World!");
+      //http.addHeader("Content-Type", "text/plain");
+
+      Serial.println("{\"key\":\"value\"}");
+
+      char temp1[] = "{\"temperature\":";
+      float temp2 = dht11.readTemperature();
+      char temp3[] = "}";
+        
+      char buffer[64];
+      sprintf(buffer, "%s%.1f%s", temp1, temp2, temp3);
+
+      Serial.println(buffer);
+
+      http.addHeader("Content-Type", "application/json");
+      int httpResponseCode = http.POST(buffer);
+      
+      //int httpResponseCode = http.POST("{\"key\":\"value\"}");
      
       Serial.print("HTTP Response code: ");
       Serial.println(httpResponseCode);

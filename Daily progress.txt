@@ -75,3 +75,6 @@ Day 19:
 
 Day 20:
 - Test sending POST request from arduino to temp API
+
+Day 21:
+- Add json with one temperature reading to the POST request
