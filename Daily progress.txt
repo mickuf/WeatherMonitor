@@ -78,3 +78,6 @@ Day 20:
 
 Day 21:
 - Add json with one temperature reading to the POST request
+
+Day 22:
+- Prepare final POST json request

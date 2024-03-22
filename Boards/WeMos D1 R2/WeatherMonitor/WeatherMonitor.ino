@@ -104,12 +104,61 @@ void loop() {
 
       Serial.println("{\"key\":\"value\"}");
 
-      char temp1[] = "{\"temperature\":";
+      //char BoardId[] = "WeMosD1R2"
+
+      //Inside
+      //float InsideTemperature
+      //int InsideHumidityPercentage
+      //float InsideHeatIndex
+
+      //int InsidePressure
+
+      //Outside
+      //float OutsideTemperature
+      //int OutsideHumidityPercentage
+      //float OutsideHeatIndex
+
+      //float OutsideLumosityPercentage
+
+      char begining[] = "{"
+      char ending[] = "}";
+
+      char boardId[] = "\"BoardId\":\"WeMosD1R2"\,";
+      char inside[] = "\"Inside\":";
+
+
+      char insideTemperature[] = "\"Temperature\":";
+      float insideTemperature = dht11.readTemperature();
+      char insideHumidityPercentage[] = "\"HumidityPercentage\":";
+      int insideHumidityPercentage = dht11.readHumidity();
+      char insideHeatIndex[] = "\"HeatIndex\":";
+      float insideHeatIndex = dht11.computeHeatIndex(dht11.readTemperature(), dht11.readHumidity(), false); // Compute heat index in Celsius (isFahreheit = false)
+      char insidePressure[] = "\"Pressure\":";
+      int insidePressure = bmp280.readPressureValue()/100;
+      
+
+      
+      char outside[] = "\"Outside\":";
+      
+      char outsideTemperature[] = "\"Temperature\":";
+      float outsideTemperature = dht11.readTemperature();
+      char outsideHumidityPercentage[] = "\"HumidityPercentage\":";
+      int outsideHumidityPercentage = dht11.readHumidity();
+      char outsideHeatIndex[] = "\"HeatIndex\":";
+      float outsideHeatIndex = dht11.computeHeatIndex(dht11.readTemperature(), dht11.readHumidity(), false); // Compute heat index in Celsius (isFahreheit = false)
+      
+      char outsideLumosityPercentage[] = "\"LumosityPercentage\":";
+      int rawLumosity = analogRead(PHOTORESISTOR_PIN);
+      int lumosityPercentage = map(rawLumosity, 30, 1024, 0, 100); // analog reading, reading minimum value, reading max value, minimum transformed value, maximum transformed value // 0 .. 1023 --> 0 .. 100 | 10k ohm: ~91 - 1024 - but starging value in not so sunny room was 1024 | 1k ohm: starting value ~650, min value ~30, max value 1024 using flashlight
+
+      
+      char temp1[] = "\"temperature\":";
       float temp2 = dht11.readTemperature();
-      char temp3[] = "}";
+      
+      
         
       char buffer[64];
-      sprintf(buffer, "%s%.1f%s", temp1, temp2, temp3);
+      sprintf(buffer, "%s%s%.1f%s", temp1, temp2, temp3);
 
       Serial.println(buffer);
 
@@ -176,7 +225,7 @@ void loop() {
 //  Serial.print("m ");
 //
 //  int rawLumosity = analogRead(PHOTORESISTOR_PIN);
-//  float lumosityPercentage = map (rawLumosity, 30, 1024, 0, 100); // analog reading, reading minimum value, reading max value, minimum transformed value, maximum transformed value
+//  float lumosityPercentage = map (rawLumosity, 30, 1024, 0, 100); // analog reading, reading minimum value, reading max value, minimum transformed value, maximum transformed value // 0 .. 1023 --> 0 .. 100 | 10k ohm: ~91 - 1024 - but starging value in not so sunny room was 1024 | 1k ohm: starting value ~650, min value ~30, max value 1024 using flashlight
 //
 //  Serial.print("|RL: "); // Raw Lumosity: 
 //  Serial.print(rawLumosity); // 0V .. 5V --> 0 .. 1023
