@@ -22,9 +22,9 @@ DHT dht11(DHT11PIN, DHT11TYPE);
 
 DFRobot_BMP280 bmp280;
 
-const char* ssid = "ESP8266";    // "ESP8266";             // TODO MOVE TO NEW FILE WITH gitingore!  
-const char* password = "ESP8266";   // "ESP8266";    // TODO MOVE TO NEW FILE WITH gitingore!
-const char* serverName = "http://192.168.1.36:5102/test1";//"http://192.168.1.106:1880/update-sensor";
+const char* ssid = "ESP8266";   // "ESP8266";             // TODO MOVE TO NEW FILE WITH gitingore!  
+const char* password = "ESP8266"; // "ESP8266";    // TODO MOVE TO NEW FILE WITH gitingore!
+const char* serverName = "http://192.168.1.36:5102/sensor";//"http://192.168.1.106:1880/update-sensor";
 
 //ESP8266WebServer server(80);    // Create a webserver object that listens for HTTP request on port 80
 
@@ -83,6 +83,8 @@ void loop() {
   //delay(59970); // Wait 60 seconds between measurements - experimental sensor reading time (for DHT 11 and 22 sensors)
   
   //server.handleClient();                    // Listen for HTTP requests from clients
+
+Serial.println("Loop start");
   
     if(WiFi.status()== WL_CONNECTED){
       WiFiClient client;
@@ -102,7 +104,7 @@ void loop() {
 
       //http.addHeader("Content-Type", "text/plain");
 
-      Serial.println("{\"key\":\"value\"}");
+      //Serial.println("{\"key\":\"value\"}");
 
       //char BoardId[] = "WeMosD1R2"
 
@@ -120,50 +122,59 @@ void loop() {
 
       //float OutsideLumosityPercentage
 
-      char begining[] = "{"
-      char ending[] = "}";
+      //char begining[] = "{"
+      //char ending[] = "}";
 
-      char boardId[] = "\"BoardId\":\"WeMosD1R2"\,";
-      char inside[] = "\"Inside\":";
+      char payload1[2000];
+      char payload2[2000];
 
 
-      char insideTemperature[] = "\"Temperature\":";
-      float insideTemperature = dht11.readTemperature();
-      char insideHumidityPercentage[] = "\"HumidityPercentage\":";
+            //http.POST("{\"api_key\":\"tPmAT5AF9\",\"sensor\":\"BME280\",\"value1\":\"24.25\",\"value2\":\"49.54\",\"value3\":\"1005.14\"}");
+      char begining[] = "{\"BoardId\":\"WeMosD1R2\",\"Inside\":{";
+
+      char insideTemperatureStr[] = "\"Temperature\":";
+      float insideTemperature = dht11.readTemperature();   
+      char insideHumidityPercentageStr[] = ",\"HumidityPercentage\":";
       int insideHumidityPercentage = dht11.readHumidity();
-      char insideHeatIndex[] = "\"HeatIndex\":";
+      char insideHeatIndexStr[] = ",\"HeatIndex\":";
       float insideHeatIndex = dht11.computeHeatIndex(dht11.readTemperature(), dht11.readHumidity(), false); // Compute heat index in Celsius (isFahreheit = false)
-      char insidePressure[] = "\"Pressure\":";
+      char insidePressureStr[] = ",\"Pressure\":";
       int insidePressure = bmp280.readPressureValue()/100;
-      
+       
+      char outside[] = "},\"Outside\":{";
 
+      char outsideTemperatureStr[] = "\"Temperature\":";
+      float outsideTemperature = dht22.readTemperature();
+      char outsideHumidityPercentageStr[] = ",\"HumidityPercentage\":";
+      int outsideHumidityPercentage = dht22.readHumidity();
+      char outsideHeatIndexStr[] = ",\"HeatIndex\":";
+      float outsideHeatIndex = dht22.computeHeatIndex(dht11.readTemperature(), dht11.readHumidity(), false); // Compute heat index in Celsius (isFahreheit = false)
       
-      char outside[] = "\"Outside\":";
-      
-      char outsideTemperature[] = "\"Temperature\":";
-      float outsideTemperature = dht11.readTemperature();
-      char outsideHumidityPercentage[] = "\"HumidityPercentage\":";
-      int outsideHumidityPercentage = dht11.readHumidity();
-      char outsideHeatIndex[] = "\"HeatIndex\":";
-      float outsideHeatIndex = dht11.computeHeatIndex(dht11.readTemperature(), dht11.readHumidity(), false); // Compute heat index in Celsius (isFahreheit = false)
-      
-      char outsideLumosityPercentage[] = "\"LumosityPercentage\":";
+      char outsideLumosityPercentageStr[] = ",\"LumosityPercentage\":";
       int rawLumosity = analogRead(PHOTORESISTOR_PIN);
       int lumosityPercentage = map(rawLumosity, 30, 1024, 0, 100); // analog reading, reading minimum value, reading max value, minimum transformed value, maximum transformed value // 0 .. 1023 --> 0 .. 100 | 10k ohm: ~91 - 1024 - but starging value in not so sunny room was 1024 | 1k ohm: starting value ~650, min value ~30, max value 1024 using flashlight
 
+      char ending[] = "}}";
+
+
+//sprintf(payload1, "%s%s%.1f%s%i%s%.1f%s%i%s", begining, insideTemperatureStr, insideTemperature, insideHumidityPercentageStr, insideHumidityPercentage, insideHeatIndexStr, insideHeatIndex, insidePressureStr, insidePressure,ending);
+                    //outsideTemperatureStr, outsideTemperature, outsideHumidityPercentageStr, outsideHumidityPercentage, outsideHeatIndexStr, outsideHeatIndex, outsideLumosityPercentageStr, lumosityPercentage, ending);
+
+sprintf(payload1, "%s%s%.1f%s%i%s%.1f%s%i%s%s%.1f%s%i%s%.1f%s%i%s", begining, insideTemperatureStr, insideTemperature, insideHumidityPercentageStr, insideHumidityPercentage, insideHeatIndexStr, insideHeatIndex, insidePressureStr, insidePressure, outside,
+                    outsideTemperatureStr, outsideTemperature, outsideHumidityPercentageStr, outsideHumidityPercentage, outsideHeatIndexStr, outsideHeatIndex, outsideLumosityPercentageStr, lumosityPercentage, ending);
       
-      char temp1[] = "\"temperature\":";
-      float temp2 = dht11.readTemperature();
+      //char temp1[] = "\"temperature\":";
+      //float temp2 = dht11.readTemperature();
       
       
         
-      char buffer[64];
-      sprintf(buffer, "%s%s%.1f%s", temp1, temp2, temp3);
+      //char buffer[64];
+      //sprintf(buffer, "%s%s%.1f%s", temp1, temp2, temp3);
 
-      Serial.println(buffer);
+      Serial.println(payload1);
 
       http.addHeader("Content-Type", "application/json");
-      int httpResponseCode = http.POST(buffer);
+      int httpResponseCode = http.POST(payload1);
       
       //int httpResponseCode = http.POST("{\"key\":\"value\"}");
      
