@@ -84,3 +84,6 @@ Day 22:
 
 Day 23:
 - Prepare final POST json request
+
+Day 24:
+- Clean up sensors reading code
