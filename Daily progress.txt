@@ -87,3 +87,6 @@ Day 23:
 
 Day 24:
 - Clean up sensors reading code
+
+Day 25:
+- Add initial Web API project
