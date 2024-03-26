@@ -90,3 +90,6 @@ Day 24:
 
 Day 25:
 - Add initial Web API project
+
+Day 26:
+- No update today
