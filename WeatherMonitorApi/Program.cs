@@ -14,6 +14,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.MapPost("/sensor", (Sensor value) =>
+{
+    sensorArray.Add(value);
+
+    string json = JsonSerializer.Serialize(value);
+
+    File.AppendAllText(@"path.json", $"{DateTime.Now}" + json + $",{Environment.NewLine}");
+
+    return Results.Ok();
+});
+
 var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
@@ -40,3 +51,10 @@ internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }
+
+public record Sensor(string BoardId, Inside Inside, Outside Outside);
+
+public record Inside(float Temperature, int HumidityPercentage, float HeatIndex, int Pressure);
+
+public record Outside(float Temperature, int HumidityPercentage, float HeatIndex, int LumosityPercentage);
+
