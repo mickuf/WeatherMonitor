@@ -97,3 +97,6 @@ Day 26:
 Day 27:
 - Update Visual Studio
 - Add sensor Post endpoint
+
+Day 28:
+- No update today
