@@ -100,3 +100,6 @@ Day 27:
 
 Day 28:
 - No update today
+
+Day 29:
+- Research on which Linux distro to install on an old laptop which will serve as a server
