@@ -103,3 +103,6 @@ Day 28:
 
 Day 29:
 - Research on which Linux distro to install on an old laptop which will serve as a server
+
+Day 30:
+- Install Ubuntu Server
