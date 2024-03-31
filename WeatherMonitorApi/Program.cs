@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -14,6 +16,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+var sensorArray = new List<Sensor>();
+
 app.MapPost("/sensor", (Sensor value) =>
 {
     sensorArray.Add(value);
@@ -23,6 +27,11 @@ app.MapPost("/sensor", (Sensor value) =>
     File.AppendAllText(@"path.json", $"{DateTime.Now}" + json + $",{Environment.NewLine}");
 
     return Results.Ok();
+});
+
+app.MapGet("/sensor", () =>
+{
+    return Results.Ok($"Readings number: {sensorArray?.Count} Last reading: {sensorArray?.Last()}");
 });
 
 var summaries = new[]

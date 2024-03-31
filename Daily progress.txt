@@ -106,3 +106,6 @@ Day 29:
 
 Day 30:
 - Install Ubuntu Server
+
+Day 31:
+- Add sensor Get endpoint
