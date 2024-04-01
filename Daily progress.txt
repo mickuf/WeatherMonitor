@@ -109,3 +109,6 @@ Day 30:
 
 Day 31:
 - Add sensor Get endpoint
+
+Day 32:
+- Remove web api template code
