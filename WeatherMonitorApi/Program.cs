@@ -31,7 +31,10 @@ app.MapPost("/sensor", (Sensor value) =>
 
 app.MapGet("/sensor", () =>
 {
-    return Results.Ok($"Readings number: {sensorArray?.Count} Last reading: {sensorArray?.Last()}");
+    if(sensorArray.Any())
+        return Results.Ok(sensorArray);
+    else
+        return Results.NotFound();
 });
 
 app.Run();

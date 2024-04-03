@@ -115,3 +115,6 @@ Day 32:
 
 Day 33:
 - No update today
+
+Day 34:
+- Change Get sensor endpoint
