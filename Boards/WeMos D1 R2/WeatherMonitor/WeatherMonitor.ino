@@ -75,11 +75,11 @@ void loop() {
        
     char outside[] = "},\"Outside\":{";
     char outsideTemperatureStr[] = "\"Temperature\":";
-    float outsideTemperature = dht22.readTemperature();
+    float outsideTemperature = dht2.readTemperature();
     char outsideHumidityPercentageStr[] = ",\"HumidityPercentage\":";
-    int outsideHumidityPercentage = dht22.readHumidity();
+    int outsideHumidityPercentage = dht2.readHumidity();
     char outsideHeatIndexStr[] = ",\"HeatIndex\":";
-    float outsideHeatIndex = dht22.computeHeatIndex(dht11.readTemperature(), dht11.readHumidity(), false); // Compute heat index in Celsius (isFahreheit = false)
+    float outsideHeatIndex = dht2.computeHeatIndex(outsideTemperature, outsideHumidityPercentages, false); // Compute heat index in Celsius (isFahreheit = false)
       
     char outsideLumosityPercentageStr[] = ",\"LumosityPercentage\":";
     int rawLumosity = analogRead(PHOTORESISTOR_PIN);
