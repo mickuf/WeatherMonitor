@@ -118,3 +118,6 @@ Day 33:
 
 Day 34:
 - Change Get sensor endpoint
+
+Day 35:
+- Change DHT11 sensor to DHT22

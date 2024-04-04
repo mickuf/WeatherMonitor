@@ -7,16 +7,16 @@
 #include <WiFiClient.h>
 #include <ESP8266HTTPClient.h>
 
-#define DHT11PIN D4             // digital pin for DHT11
-#define DHT11TYPE DHT11         // DHT 11
+#define DHT22PIN1 D4             // digital pin for DHT22 1
+#define DHT22PIN2 D5             // digital pin for DHT22 2
 
-#define DHT22PIN D5             // digital pin for DHT22
-#define DHT22TYPE DHT22         // DHT 22  (AM2302), AM2321
+#define DHT22TYPE1 DHT22         // DHT 22  (AM2302), AM2321
+#define DHT22TYPE2 DHT22         // DHT 22  (AM2302), AM2321
 
 #define PHOTORESISTOR_PIN A0    // A0 - analog input 
 
-DHT dht22(DHT22PIN, DHT22TYPE);
-DHT dht11(DHT11PIN, DHT11TYPE);
+DHT dht1(DHT22PIN1, DHT22TYPE1);
+DHT dht2(DHT22PIN2, DHT22TYPE2);
 
 DFRobot_BMP280 bmp280;
 
@@ -64,11 +64,11 @@ void loop() {
     char begining[] = "{\"BoardId\":\"WeMosD1R2\",\"Inside\":{";
 
     char insideTemperatureStr[] = "\"Temperature\":";
-    float insideTemperature = dht11.readTemperature();   
+    float insideTemperature = dht1.readTemperature();   
     char insideHumidityPercentageStr[] = ",\"HumidityPercentage\":";
-    int insideHumidityPercentage = dht11.readHumidity();
+    int insideHumidityPercentage = dht1.readHumidity();
     char insideHeatIndexStr[] = ",\"HeatIndex\":";
-    float insideHeatIndex = dht11.computeHeatIndex(dht11.readTemperature(), dht11.readHumidity(), false); // Compute heat index in Celsius (isFahreheit = false)
+    float insideHeatIndex = dht1.computeHeatIndex(insideTemperature, insideHumidityPercentage, false); // Compute heat index in Celsius (isFahreheit = false)
 
     char insidePressureStr[] = ",\"Pressure\":";
     int insidePressure = bmp280.readPressureValue()/100;
