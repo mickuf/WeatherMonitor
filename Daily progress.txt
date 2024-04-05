@@ -121,3 +121,6 @@ Day 34:
 
 Day 35:
 - Change DHT11 sensor to DHT22
+
+Day 36:
+- No update today
