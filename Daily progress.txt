@@ -124,3 +124,6 @@ Day 35:
 
 Day 36:
 - No update today
+
+Day 37:
+- Add initial WeMos D1 project
