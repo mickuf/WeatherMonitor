@@ -133,3 +133,6 @@ Day 38:
 
 Day 39:
 - No update today
+
+Day 40:
+- Order missing IoT components
