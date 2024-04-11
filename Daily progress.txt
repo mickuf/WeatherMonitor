@@ -139,3 +139,6 @@ Day 40:
 
 Day 41:
 - No update today
+
+Day 42:
+- Research if millis() will make more sense than delay() 
