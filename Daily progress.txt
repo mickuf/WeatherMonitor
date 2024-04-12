@@ -141,4 +141,7 @@ Day 41:
 - No update today
 
 Day 42:
-- Research if millis() will make more sense than delay() 
+- Research if millis() will make more sense than delay()
+
+Day 43:
+- Replace RAM in server
