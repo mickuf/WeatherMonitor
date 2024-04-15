@@ -151,3 +151,6 @@ Day 44:
 
 Day 45:
 - No update today
+
+Day 46:
+- Setup new boards with new sensors
