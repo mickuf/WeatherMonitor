@@ -160,3 +160,6 @@ Day 47:
 
 Day 48:
 - Split board files to separate folders
+
+Day 49:
+- Remove BNP sensor from 2nd board as it will not read data from this sensor

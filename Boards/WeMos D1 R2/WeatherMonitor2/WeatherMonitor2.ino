@@ -1,8 +1,5 @@
 #include "DHT.h"                // Thermometer and hygrometer
 
-#include <Wire.h>               // DFRobot_BMP280 sensor
-#include "DFRobot_BMP280.h"     // DFRobot_BMP280 sensor
-
 #include <ESP8266WiFi.h>        
 #include <WiFiClient.h>
 #include <ESP8266HTTPClient.h>
@@ -17,8 +14,6 @@
 
 DHT dht1(DHT22PIN1, DHT22TYPE1);
 DHT dht2(DHT22PIN2, DHT22TYPE2);
-
-DFRobot_BMP280 bmp280;
 
 const char* ssid = "ESP8266";   // "ESP8266";             
 const char* password = "ESP8266"; // "ESP8266";
@@ -42,13 +37,7 @@ void setup() {
   Serial.println(WiFi.localIP());
 
   dht11.begin();
-  dht22.begin();
-
-  if (!bmp280.begin()) {  
-    Serial.println("Could not find a valid BMP280 sensor!");
-    while (1);
-  }
-  
+  dht22.begin();  
 }
 
 void loop() {
@@ -69,9 +58,6 @@ void loop() {
     int insideHumidityPercentage = dht1.readHumidity();
     char insideHeatIndexStr[] = ",\"HeatIndex\":";
     float insideHeatIndex = dht1.computeHeatIndex(insideTemperature, insideHumidityPercentage, false); // Compute heat index in Celsius (isFahreheit = false)
-
-    char insidePressureStr[] = ",\"Pressure\":";
-    int insidePressure = bmp280.readPressureValue()/100;
        
     char outside[] = "},\"Outside\":{";
     char outsideTemperatureStr[] = "\"Temperature\":";
@@ -91,7 +77,7 @@ void loop() {
     char ending[] = "}}";
 
     sprintf(payload,
-      "%s%s%.1f%s%i%s%.1f%s%i%s%s%.1f%s%i%s%.1f%s%i%s",
+      "%s%s%.1f%s%i%s%.1f%s%s%.1f%s%i%s%.1f%s%i%s",
       begining,
       insideTemperatureStr,
       insideTemperature,
