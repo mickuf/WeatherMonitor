@@ -163,3 +163,9 @@ Day 48:
 
 Day 49:
 - Remove BNP sensor from 2nd board as it will not read data from this sensor
+
+Day 50:
+- Missed update
+
+Day 51:
+- No update today
