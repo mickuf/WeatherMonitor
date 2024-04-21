@@ -169,3 +169,6 @@ Day 50:
 
 Day 51:
 - No update today
+
+Day 52:
+- Remove not used sensors from D1 Board
