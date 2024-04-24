@@ -50,7 +50,7 @@ void loop() {
 
     char payload[2000];
 
-    char begining[] = "{\"BoardId\":\"WeMosD1R2\",\"Inside\":{";
+    char begining[] = "{\"BoardId\":\"WeMosD1R2v2\",\"Inside\":{";
 
     char insideTemperatureStr[] = "\"Temperature\":";
     float insideTemperature = dht1.readTemperature();   

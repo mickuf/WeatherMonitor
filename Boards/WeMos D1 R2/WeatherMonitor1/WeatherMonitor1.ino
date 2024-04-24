@@ -48,7 +48,6 @@ void setup() {
     Serial.println("Could not find a valid BMP280 sensor!");
     while (1);
   }
-  
 }
 
 void loop() {
@@ -61,7 +60,7 @@ void loop() {
 
     char payload[2000];
 
-    char begining[] = "{\"BoardId\":\"WeMosD1R2\",\"Inside\":{";
+    char begining[] = "{\"BoardId\":\"WeMosD1R2v1\",\"Inside\":{";
 
     char insideTemperatureStr[] = "\"Temperature\":";
     float insideTemperature = dht1.readTemperature();   
